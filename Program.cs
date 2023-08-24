@@ -16,27 +16,27 @@ namespace dotnetcore
             SecretClientOptions options = new SecretClientOptions(){
                 Retry = {
                     Delay = TimeSpan.FromSeconds(2),
-                    MaxDelay = TimeSpan(FromSeconds(16),
+                    MaxDelay = TimeSpan.FromSeconds(16),
                     MaxRetries = 5,
                     Mode = RetryMode.Exponential
                 }
             };
 
             var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential(), options);
-            keyVaultName secret = client.GetSecret(secretName);
+            KeyVaultSecret secret = client.GetSecret(secretName);
 
-            Console.Writeline("getSecret : " + secret.Value);
+            Console.WriteLine("getSecret : " + secret.Value);
             Console.Write("Enter Secret > ");
 
             string secretValue = Console.ReadLine();
             client.SetSecret(secretName, secretValue);
 
-            Console.Writeline("SetSecret : Key: " + secretName + ", Value : " + secretValue);
+            Console.WriteLine("SetSecret : Key: " + secretName + ", Value : " + secretValue);
 
             client.StartDeleteSecret(secretName);
-            Console.Writeline("StartDeleteSecret" + keyVaultName);
+            Console.WriteLine("StartDeleteSecret" + keyVaultName);
 
-            Console.Writeline("GetSecret : " + secret.Value);
+            Console.WriteLine("GetSecret : " + secret.Value);
 
  
             
